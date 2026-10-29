@@ -1,6 +1,6 @@
 # App-Hub – alle deine Web-Apps an einem Ort
 
-Der App-Hub ist eine Startseite für deine Web-Apps: Kacheln nach Kategorien, mit Notizen und Online-Check. Er besteht aus **einer einzigen Datei** (`index.html`), braucht weder Server noch Konto und speichert alles **nur in deinem Browser**.
+Der App-Hub ist eine Startseite für deine Web-Apps im Piraten-Look (One-Piece-Stil): Steckbrief-Kacheln nach Kategorien, mit Notizen und Online-Check. Er besteht aus **einer einzigen Datei** (`index.html`), braucht weder Server noch Konto und speichert alles **nur in deinem Browser**.
 
 **Adresse:** https://hezudemnrik-eng.github.io/Uebersicht/
 
@@ -18,7 +18,7 @@ Beim ersten Start ist **Blueprint** schon eingetragen (Kategorie „Minecraft“
 - **Öffnen:** Klick auf eine Kachel. Unter Einstellungen → „Apps öffnen“ wählst du neuer Tab oder gleicher Tab. „Automatisch“ öffnet im Browser einen neuen Tab und als installierte App am iPhone im selben Fenster.
 - **Suchen:** oben ins Suchfeld tippen. Gesucht wird in Name, Adresse, Beschreibung, Notizen und Kategorie. Taste **/** springt ins Feld, **Enter** öffnet den ersten Treffer.
 - **Hinzufügen:** „+ App“. Name, Adresse (ohne `https://` geht auch), Kategorie (oder direkt eine neue), Icon, Farbe, Kurzbeschreibung und Notizen (Markdown mit Vorschau).
-  - **Icon:** Pixel-Icon aus Blueprint, das Icon der Website (`favicon.ico`, optional eigene Bild-Adresse) oder ein Buchstabe bzw. Emoji.
+  - **Icon:** Piraten-Icon (Strohhut, Flagge, Schiff, Teufelsfrucht …), das Icon der Website (`favicon.ico`, optional eigene Bild-Adresse) oder ein Buchstabe bzw. Emoji.
   - Erlaubt sind nur Web-Adressen (`https://`, `http://`).
 - **Bearbeiten & löschen:** der Stift auf der Kachel. Gelöschtes lässt sich über „Rückgängig“ zurückholen.
 - **Details:** das Info-Symbol zeigt Adresse, Status mit Uhrzeit und die Notizen.
@@ -28,7 +28,9 @@ Beim ersten Start ist **Blueprint** schon eingetragen (Kategorie „Minecraft“
 - **Am PC:** Kacheln ziehen, innerhalb einer Kategorie oder in eine andere (auch auf die Überschrift einer zugeklappten Kategorie).
 - **Am Handy:** „Anordnen“ antippen und mit den Pfeilen verschieben, oder im Bearbeiten-Dialog die Kategorie wechseln.
 - **Kategorien:** im Anordnen-Modus (am PC auch beim Darüberfahren) umbenennen, nach oben/unten schieben oder löschen. Die Apps einer gelöschten Kategorie landen unter „Ohne Kategorie“.
-- Ein Klick auf den Kategorienamen klappt sie zu oder auf. Das bleibt gespeichert.
+- Ein Klick auf den Kategorienamen klappt sie zu oder auf. Das bleibt gespeichert. Zugeklappte Kategorien zeigen ihre App-Icons in der Kopfzeile.
+- **Flaggenfarbe:** beim Bearbeiten einer Kategorie wählbar, sonst automatisch.
+- **Kategorien-Leiste:** ab zwei Kategorien oben eingeblendet. Ein Klick springt zur Kategorie, „Alle zu“ / „Alle auf“ klappt alle gleichzeitig. Kleine Kategorien stehen am PC nebeneinander.
 
 ## Online-Check
 
@@ -57,5 +59,5 @@ In Safari die Adresse öffnen → Teilen-Symbol → **„Zum Home-Bildschirm“*
 
 ## Lizenzen
 
-- Überschriften-Schrift: **Silkscreen** von Jason Kottke, SIL Open Font License 1.1
-- Pixel-Icons: aus Blueprint, selbst gezeichnet
+- Überschriften-Schrift: **Bangers** von Vernon Adams, SIL Open Font License 1.1
+- Piraten-Icons: selbst gezeichnet (frühere Pixel-Icons werden automatisch auf passende neue Icons umgestellt)
