@@ -30,6 +30,7 @@ Beim ersten Start ist **Blueprint** schon eingetragen (Kategorie „Minecraft“
 - **Kategorien:** im Anordnen-Modus (am PC auch beim Darüberfahren) umbenennen, nach oben/unten schieben oder löschen. Die Apps einer gelöschten Kategorie landen unter „Ohne Kategorie“.
 - Ein Klick auf den Kategorienamen klappt sie zu oder auf. Das bleibt gespeichert. Zugeklappte Kategorien zeigen ihre App-Icons in der Kopfzeile.
 - **Flaggenfarbe:** beim Bearbeiten einer Kategorie wählbar, sonst automatisch.
+- **Kompakt:** der Knopf oben schaltet auf kleine Kacheln ohne Beschreibung um, praktisch bei vielen Apps. Die Wahl bleibt gespeichert.
 - **Kategorien-Leiste:** ab zwei Kategorien oben eingeblendet. Ein Klick springt zur Kategorie, „Alle zu“ / „Alle auf“ klappt alle gleichzeitig. Kleine Kategorien stehen am PC nebeneinander.
 
 ## Online-Check
@@ -59,5 +60,6 @@ In Safari die Adresse öffnen → Teilen-Symbol → **„Zum Home-Bildschirm“*
 
 ## Lizenzen
 
+- Hintergrundbilder (Nachtmeer mit Schiff): mit ChatGPT erstellt, in `index.html` eingebettet
 - Überschriften-Schrift: **Bangers** von Vernon Adams, SIL Open Font License 1.1
 - Piraten-Icons: selbst gezeichnet (frühere Pixel-Icons werden automatisch auf passende neue Icons umgestellt)
