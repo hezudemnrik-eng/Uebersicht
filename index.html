@@ -305,6 +305,31 @@ dialog.narrow { width: min(460px, calc(100vw - 32px)); }
 .btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
 .err { color: #ff7b78; font-size: 13px; }
 
+/* ===== Kompakt-Ansicht ===== */
+.compact .cat { flex-basis: calc(var(--span) * 205px + 30px); min-width: min(100%, 250px); }
+.compact .cat-head { margin-bottom: 10px; min-height: 46px; padding-top: 6px; padding-bottom: 6px; }
+.compact .cat-toggle { font-size: 20px; }
+.compact .tiles { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; }
+.compact .tile { flex-direction: row; align-items: center; border-radius: 7px; box-shadow: 0 2px 0 rgba(0, 0, 0, .35), inset 0 0 0 2px rgba(255, 248, 225, .45); }
+.compact .tile::before { left: -2px; right: auto; top: -2px; bottom: -2px; width: 6px; height: auto; border-radius: 6px 0 0 6px; box-shadow: inset -2px 0 0 rgba(0, 0, 0, .2); }
+.compact .tile:hover { transform: translateY(-2px); box-shadow: 0 4px 0 rgba(0, 0, 0, .3), 0 8px 16px rgba(0, 0, 0, .25), inset 0 0 0 2px rgba(255, 248, 225, .45); }
+.compact .tile-main { padding: 8px 4px 8px 14px; gap: 0 10px; border-radius: 7px 0 0 7px; min-width: 0; align-self: stretch; align-content: center; }
+.compact .tile-desc { display: none; }
+.compact .tile-name { font-size: 17px; }
+.compact .tile-name .ui-icon { display: none; }
+.compact .tile-host { font-size: 11px; margin-top: 1px; }
+.compact .app-badge { width: 34px; height: 34px; }
+.compact .app-badge img, .compact .app-badge .px-icon svg { width: 22px; height: 22px; }
+.compact .app-badge .letter { font-size: 18px; }
+.compact .tile-foot { padding: 0 4px 0 0; min-height: 0; gap: 0; flex: none; }
+.compact .tile-foot .status { order: -1; margin-right: 4px; }
+.compact .tile-foot .status .txt { display: none; }
+.compact .tile-foot .spacer { display: none; }
+.compact .tile-foot .icon-btn { width: 26px; height: 26px; }
+.compact .tile-foot [data-fkey^="tile-edit-"] { display: none; }
+.compact .tile:hover [data-fkey^="tile-edit-"], .compact .tile:focus-within [data-fkey^="tile-edit-"], .compact.arranging [data-fkey^="tile-edit-"] { display: inline-grid; }
+@media (hover: none) { .compact .tile-foot [data-fkey^="tile-edit-"] { display: inline-grid; } }
+
 /* ===== Schmale Fenster ===== */
 @media (max-width: 900px) {
   .dash-grid { grid-template-columns: 1fr; }
@@ -318,7 +343,7 @@ dialog.narrow { width: min(460px, calc(100vw - 32px)); }
   .grid2 { grid-template-columns: 1fr; }
   .view-head h1 { font-size: 22px; }
   .head-text { flex-basis: 100%; }
-  .tiles { grid-template-columns: minmax(0, 1fr); }
+  .tiles, .compact .tiles { grid-template-columns: minmax(0, 1fr); }
   .cat-nav { margin: 0 -16px 14px; padding: 8px 16px; }
   .cat-nav .btn .lbl { display: none; }
   .cats { gap: 14px; }
@@ -494,7 +519,9 @@ const UI_PATHS = {
   move: '<path d="M12 3v18M3 12h18M9 6l3-3 3 3M9 18l3 3 3-3M6 9l-3 3 3 3M18 9l3 3-3 3"/>',
   external: '<path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>',
   info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/>',
-  note: '<path d="M5 3h10l4 4v14H5z"/><path d="M15 3v4h4M8 12h8M8 16h6"/>'
+  note: '<path d="M5 3h10l4 4v14H5z"/><path d="M15 3v4h4M8 12h8M8 16h6"/>',
+  rows: '<path d="M4 6h16M4 12h16M4 18h16"/>',
+  cards: '<rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/>'
 };
 function sym(name, size = 16) {
   const s = document.createElement('span');
@@ -763,7 +790,7 @@ const ui = {
   exportBusy: false,
   importText: '',
   importError: '',
-  prefs: { collapsed: {}, lastCat: null }
+  prefs: { collapsed: {}, lastCat: null, compact: false }
 };
 function loadPrefs() {
   try {
@@ -1037,12 +1064,15 @@ function renderTop() {
     h('div', { class: 'top-actions' },
       h('button', { class: 'btn', title: 'Alle Apps auf Erreichbarkeit prüfen', 'data-fkey': 'check-all', disabled: ui.checkingAll, onClick: checkAll },
         sym('refresh', 15), h('span', { class: 'lbl' }, ui.checkingAll ? 'Prüfe …' : 'Alle prüfen')),
+      h('button', { class: 'btn', title: ui.prefs.compact ? 'Große Kacheln mit Beschreibung' : 'Kompakt: kleine Kacheln, mehr Apps auf einen Blick', 'aria-pressed': String(!!ui.prefs.compact), 'data-fkey': 'density',
+        onClick: () => { ui.prefs.compact = !ui.prefs.compact; savePrefs(); ui.pendingFocus = 'density'; render(); } },
+        sym(ui.prefs.compact ? 'cards' : 'rows', 15), h('span', { class: 'lbl' }, 'Kompakt')),
       h('button', { class: 'btn', title: 'Kacheln und Kategorien ordnen', 'aria-pressed': String(ui.arrange), 'data-fkey': 'arrange', onClick: toggleArrange },
         sym('move', 15), h('span', { class: 'lbl' }, 'Anordnen')),
       h('button', { class: 'btn primary', 'data-fkey': 'add-app', onClick: () => openAppModal(null) }, sym('plus', 15), 'App')));
 }
 function renderHome() {
-  const wrap = h('div', { class: 'wrap' + (ui.arrange ? ' arranging' : '') }, renderTop());
+  const wrap = h('div', { class: 'wrap' + (ui.arrange ? ' arranging' : '') + (ui.prefs.compact ? ' compact' : '') }, renderTop());
   if (ui.arrange) {
     wrap.append(h('div', { class: 'banner' }, sym('move', 18),
       h('span', { class: 'text' }, 'Anordnen: Kacheln am PC einfach ziehen, am Handy mit den Pfeilen verschieben. Kategorien lassen sich umbenennen, verschieben und löschen.'),
@@ -1118,7 +1148,7 @@ function categorySection(cat, apps, searching) {
         h('button', { class: 'icon-btn danger-hover', title: 'Kategorie löschen', 'aria-label': `„${name}“ löschen`, 'data-fkey': `cat-del-${key}`, onClick: () => deleteCategory(cat) }, sym('trash', 15))
       ] : null));
   // Breite nach Anzahl der Kacheln: kleine Kategorien teilen sich eine Zeile
-  const span = collapsed ? 1 : Math.min(4, Math.max(1, apps.length));
+  const span = collapsed ? 1 : Math.min(ui.prefs.compact ? 3 : 4, Math.max(1, apps.length));
   const section = h('section', { class: 'cat' + (cat ? '' : ' none') + (collapsed ? ' collapsed' : ''), dataset: { cat: key },
     style: { '--cc': catColor(cat), '--span': String(span) } }, head);
   if (!searching) wireDropZone(head, id, true);
@@ -1135,7 +1165,7 @@ function tile(a, i, n, searching) {
   const newTab = opensNewTab();
   const hasNotes = !!a.notes.trim();
   const main = h(a.url ? 'a' : 'div', a.url
-    ? { class: 'tile-main', href: a.url, target: newTab ? '_blank' : null, rel: 'noopener noreferrer', draggable: 'false', title: a.url, 'data-fkey': `tile-${a.id}` }
+    ? { class: 'tile-main', href: a.url, target: newTab ? '_blank' : null, rel: 'noopener noreferrer', draggable: 'false', title: a.description ? `${a.description}\n${a.url}` : a.url, 'data-fkey': `tile-${a.id}` }
     : { class: 'tile-main disabled' },
   appBadge(a),
   h('div', { class: 'tile-text' },
@@ -1531,6 +1561,7 @@ function openHelp() {
     sec('Ordnen', ['Am PC: Kacheln ziehen, innerhalb einer Kategorie oder in eine andere.', 'Am Handy: „Anordnen“ antippen und mit den Pfeilen verschieben, oder im Bearbeiten-Dialog die Kategorie wechseln.',
       'Kategorien: im Anordnen-Modus (am PC auch beim Darüberfahren) umbenennen, Flaggenfarbe wählen, nach oben/unten schieben oder löschen. Apps einer gelöschten Kategorie landen unter „Ohne Kategorie“.',
       'Klick auf den Kategorienamen klappt sie zu oder auf. Zugeklappte Kategorien zeigen ihre Icons in der Kopfzeile.',
+      '„Kompakt“ oben zeigt kleine Kacheln ohne Beschreibung, damit viele Apps auf einen Blick passen. Die Beschreibung steht dann im Tooltip.',
       'Ab zwei Kategorien gibt es oben eine Leiste: ein Klick springt zur Kategorie, „Alle zu“ / „Alle auf“ klappt alle auf einmal.']),
     sec('Online-Check', ['Beim Öffnen und mit „Alle prüfen“ fragt der App-Hub jede Adresse an. Grün = antwortet, Rot = keine Antwort oder Zeitüberschreitung (6 Sekunden).',
       'Bei Apps unter hezudemnrik-eng.github.io erkennt er auch Fehlerseiten wie 404. Bei fremden Seiten sieht der Browser nur, ob der Server antwortet. Eine Fehlerseite zählt dort als online.',
