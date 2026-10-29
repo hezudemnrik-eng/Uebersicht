@@ -59,5 +59,6 @@ In Safari die Adresse öffnen → Teilen-Symbol → **„Zum Home-Bildschirm“*
 
 ## Lizenzen
 
+- Hintergrundbilder (Nachtmeer mit Schiff): mit ChatGPT erstellt, in `index.html` eingebettet
 - Überschriften-Schrift: **Bangers** von Vernon Adams, SIL Open Font License 1.1
 - Piraten-Icons: selbst gezeichnet (frühere Pixel-Icons werden automatisch auf passende neue Icons umgestellt)
